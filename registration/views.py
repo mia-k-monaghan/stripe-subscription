@@ -24,10 +24,7 @@ class SignupView(CreateView):
                             password=password)
         login(self.request, user)
 
-        Subscription.objects.create(user=self.request.user,
-            stripe_customer="Test_customer",
-            stripe_subscription="Test_subscription"
-        )
+        Subscription.objects.create(user=self.request.user)
 
         return valid
 
