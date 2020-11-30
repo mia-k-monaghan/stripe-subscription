@@ -22,6 +22,8 @@ TEMPLATE_DIR = BASE_DIR / 'TEMPLATES'
 
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = 'd0mml3!1da&dfs1--iuudtlfiwgb^b7#l&705ed-_-u8%$egp3'
+STRIPE_TEST_SECRET_KEY = 'sk_test_51HA03iLPfeVqJ0LGta1164YMe79XwRSz4sWWWsKprvXv3dvWhgP994UN1UqiowIHh0hbLOKHdUDCCeuZFo0FwlQs00wVbK9yIW'
+STRIPE_TEST_PUBLISHABLE_KEY = 'pk_test_51HA03iLPfeVqJ0LGF7vJErtgow7hEF95tZc3jk1zhMmpXAcEfTR0mBSiPqu4oqlivxO9EAGfeIegQAIXzhUKbMWl00tdieedgt'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
