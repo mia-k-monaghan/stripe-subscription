@@ -6,7 +6,7 @@ from django.contrib.auth import login, authenticate, get_user_model
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views.generic import CreateView, DetailView
 
-
+from core.models import Subscription
 from .forms import SignUpForm, LoginForm
 # Create your views here.
 
@@ -23,6 +23,12 @@ class SignupView(CreateView):
         user = authenticate(email=email,
                             password=password)
         login(self.request, user)
+
+        Subscription.objects.create(user=self.request.user,
+            stripe_customer="Test_customer",
+            stripe_subscription="Test_subscription"
+        )
+
         return valid
 
 class LoginView(auth_views.LoginView):

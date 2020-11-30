@@ -11,4 +11,4 @@ class Subscription(models.Model):
         help_text = "The user's Stripe Customer object, if it exists")
 
     def __str__(self):
-        return (self.email)
+        return str(self.user)
