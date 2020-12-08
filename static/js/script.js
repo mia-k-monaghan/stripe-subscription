@@ -24,6 +24,9 @@ card.on('change', function (event) {
   displayError(event);
 });
 
+var form = document.getElementById('subscription-form');
+
+
 function displayError(event) {
   changeLoadingStatePrices(false);
   let displayError = document.getElementById('card-element-errors');
