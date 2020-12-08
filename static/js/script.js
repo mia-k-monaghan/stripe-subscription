@@ -25,6 +25,10 @@ card.on('change', function (event) {
 });
 
 var form = document.getElementById('subscription-form');
+form.addEventListener('submit', function (ev) {
+  ev.preventDefault();
+  createPaymentMethod({ card });
+  });
 
 
 function displayError(event) {
@@ -36,3 +40,51 @@ function displayError(event) {
     displayError.textContent = '';
   }
 }
+
+function createPaymentMethod({ card }) {
+  // Set up payment method for recurring usage
+  let billingName = document.querySelector('#name').value;
+  stripe.createPaymentMethod({
+      type: 'card',
+      card: card,
+      billing_details: {
+        name: billingName,
+      },
+    })
+    .then((result) => {
+      if (result.error) {
+        displayError(result);
+      } else {
+        const paymentParams = {
+           price_id: document.getElementById("priceId").innerHTML,
+           payment_method: result.paymentMethod.id,
+       };
+       fetch('/create-subscription', {
+        method: 'post',
+        headers: {
+          'Content-type': 'application/json',
+          'X-CSRFToken':'{{ csrf_token }}',
+        },
+        credentials: 'same-origin',
+        body: JSON.stringify(paymentParams),
+      })
+        .then((response) => {
+          return response.json();
+        })
+        // If the card is declined, display an error to the user.
+        .then((result) => {
+          if (result.error) {
+            // The card had an error when trying to attach it to a customer.
+            throw result;
+          }
+          return result;
+        })
+        .catch((error) => {
+          // An error has happened. Display the failure to the user here.
+          // We utilize the HTML element we created.
+          showCardError(error);
+        })
+
+      }
+    });
+  }
