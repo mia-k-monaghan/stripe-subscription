@@ -37,3 +37,6 @@ def createSubscription(request):
             return JsonResponse(subscription)
         except Exception as e:
             return JsonResponse(error={'message': str(e)}), 200
+
+    else:
+        return render(request, 'core/subscribe.html')
