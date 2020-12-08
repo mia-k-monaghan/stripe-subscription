@@ -4,6 +4,7 @@
 
 {% block extra_head %}
   <script src="https://js.stripe.com/v3/"></script>
+  <link rel="stylesheet" href="{% static "css/StripeElements.css" %}">
 {% endblock extra_head %}
 
 {% block content %}
@@ -16,13 +17,14 @@
     <div class="card mx-5">
       <div class="card-body">
         <form id="payment-form">
+          <p class='hidden' id='priceId'>price_1HtL0GLPfeVqJ0LGqA9O1SN4</p>
           <div id="card-element">
             <!-- Elements will create input elements here -->
           </div>
 
           <!-- We'll put the error messages in this element -->
           <div id="card-element-errors" role="alert"></div>
-          <button type="submit">Subscribe</button>
+          <button id='submit' type="submit">Subscribe</button>
         </form>
       </div>
     </div>
@@ -30,6 +32,5 @@
 {% endblock content %}
 
 {% block extra_scripts %}
-  <link rel="stylesheet" href="{% static "css/StripeElements.css" %}">
   <script src="{% static "script.js" %}"></script>
 {% endblock extra_scripts %}
