@@ -87,7 +87,8 @@ function createPaymentMethod({ card }) {
         .catch((error) => {
           // An error has happened. Display the failure to the user here.
           // We utilize the HTML element we created.
-          showCardError(error);
+          // showCardError(error);
+          console.log(error);
         })
 
       }
