@@ -20,8 +20,13 @@ let style = {
 let card = elements.create('card', { style: style });
 
 card.mount('#card-element');
-card.on('change', function (event) {
-  displayError(event);
+cardElement.on('change', function(event) {
+  var displayError = document.getElementById('card-errors');
+  if (event.error) {
+    displayError.textContent = event.error.message;
+  } else {
+    displayError.textContent = '';
+  }
 });
 
 var form = document.getElementById('subscription-form');
@@ -32,7 +37,7 @@ form.addEventListener('submit', function (ev) {
 
 
 function displayError(event) {
-  changeLoadingStatePrices(false);
+  // changeLoadingStatePrices(false);
   let displayError = document.getElementById('card-element-errors');
   if (event.error) {
     displayError.textContent = event.error.message;
