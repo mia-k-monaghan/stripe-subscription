@@ -56,8 +56,8 @@ function createPaymentMethod({ card }) {
         displayError(result);
       } else {
         const paymentParams = {
-           price_id: document.getElementById("priceId").innerHTML,
-           payment_method: result.paymentMethod.id,
+           priceId: document.getElementById("priceId").innerHTML,
+           paymentMethodId: result.paymentMethod.id,
        };
        fetch('/create-subscription', {
         method: 'post',
