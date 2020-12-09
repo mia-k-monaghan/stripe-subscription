@@ -1,8 +1,10 @@
 from django.shortcuts import render
 from django.conf import settings
 from django.http import JsonResponse
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.decorators import login_required
 from django.views.decorators.csrf import csrf_exempt
+from django.views.generic import View
 
 import json
 import stripe
@@ -10,6 +12,11 @@ import stripe
 stripe.api_key = settings.STRIPE_TEST_SECRET_KEY
 
 # Create your views here.
+class CheckoutView(LoginRequiredMixin,View):
+    def get(self, *args,**kwargs):
+        return render(self.request, 'core/subscribe.html')
+
+
 @login_required
 @csrf_exempt
 def createSubscription(request):
@@ -42,6 +49,3 @@ def createSubscription(request):
             return JsonResponse(subscription)
         except Exception as e:
             return JsonResponse(error={'message': str(e)}), 200
-
-    else:
-        return render(request, 'core/subscribe.html')
