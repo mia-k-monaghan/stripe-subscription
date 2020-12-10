@@ -17,20 +17,20 @@ class CheckoutView(LoginRequiredMixin,View):
         return render(self.request, 'core/subscribe.html')
 
 
-@login_required
 @csrf_exempt
+@login_required
 def createSubscription(request):
-    if request.method=='POST':
-        data = json.loads(request.data)
+    if request.method=="POST":
+        data = json.loads(request.body)
         try:
             # Attach the payment method to the customer
             stripe.PaymentMethod.attach(
                 data['paymentMethodId'],
-                customer=request.user.kwargs['stripe_customer'],
+                customer=request.user.stripe_customer,
             )
             # Set the default payment method on the customer
             stripe.Customer.modify(
-                request.user.kwargs['stripe_customer'],
+                request.user.stripe_customer,
                 invoice_settings={
                     'default_payment_method': data['paymentMethodId'],
                 },
@@ -38,7 +38,7 @@ def createSubscription(request):
 
             # Create the subscription
             subscription = stripe.Subscription.create(
-                customer=request.user.kwargs['stripe_customer'],
+                customer=request.user.stripe_customer,
                 items=[
                     {
                         'price': data['priceId']
@@ -48,4 +48,5 @@ def createSubscription(request):
             )
             return JsonResponse(subscription)
         except Exception as e:
-            return JsonResponse(error={'message': str(e)}), 200
+            print(str(e))
+            return JsonResponse({'message': str(e)}, status=200)
