@@ -85,7 +85,7 @@ function createSubscription({ paymentMethodId, priceId }) {
      })
      .then((result) => {
 
-          window.location.href = '/';
+          window.location.href = '/success';
 
       })
      .catch((error) => {

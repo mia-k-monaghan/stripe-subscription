@@ -18,6 +18,10 @@ class CheckoutView(LoginRequiredMixin,View):
     def get(self, *args,**kwargs):
         return render(self.request, 'core/subscribe.html')
 
+class SuccessView(LoginRequiredMixin,View):
+    def get(self):
+        return render(self.request, 'core/success.html')
+
 
 @csrf_exempt
 @login_required
