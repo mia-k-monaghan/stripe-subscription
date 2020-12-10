@@ -68,3 +68,15 @@ def createSubscription(request):
         except Exception as e:
             print(str(e))
             return JsonResponse({'message': str(e)}, status=200)
+
+@login_required
+def createcustomersession(request):
+    user = stripe.Customer.retrieve(request.user.stripe_customer)
+    stripe.api_key = settings.STRIPE_TEST_SECRET_KEY
+
+    session = stripe.billing_portal.Session.create(
+      customer=user.id,
+      return_url= 'http://127.0.0.1:8000/',
+
+    )
+    return HttpResponseRedirect(session.url)

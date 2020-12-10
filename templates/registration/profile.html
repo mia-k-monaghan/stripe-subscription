@@ -7,10 +7,16 @@
   <div class="card mx-5">
     <div class="card-body">
       <h5 class="card-title">Account Details</h5>
+      <p><strong>{{status}}</strong></p>
       <p>Name: {{user.first_name}} {{user.last_name}}</p>
       <p>Email: {{user.email}}</p>
       <p>Payment Method: **** **** **** {{last4}}</p>
-      <p><strong>{{status}}</strong></p>
+
+      <form method="POST" action="{% url 'core:session' %}">
+        {% csrf_token %}
+          <button class="btn btn-primary" type="submit">Manage billing</button>
+      </form>
+      
     </div>
 
   </div>
