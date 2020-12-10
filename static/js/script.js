@@ -49,6 +49,7 @@ function createPaymentMethod({ card }) {
       } else {
         const paymentParams = {
           paymentMethodId: result.paymentMethod.id,
+          last4: result.paymentMethod.card.last4,
           priceId: document.getElementById("priceId").innerHTML,
         };
         createSubscription(paymentParams);
@@ -56,7 +57,7 @@ function createPaymentMethod({ card }) {
     });
   }
 
-function createSubscription({ paymentMethodId, priceId }) {
+function createSubscription({ paymentMethodId, last4, priceId }) {
 
     return (
       fetch('/create-subscription', {
@@ -68,6 +69,7 @@ function createSubscription({ paymentMethodId, priceId }) {
        credentials: 'same-origin',
        body: JSON.stringify({
           paymentMethodId: paymentMethodId,
+          last4: last4,
           priceId: priceId,
         }),
      })

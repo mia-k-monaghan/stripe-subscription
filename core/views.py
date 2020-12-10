@@ -58,6 +58,7 @@ def createSubscription(request):
             try:
                 dj_subscription.stripe_subscription = subscription.id
                 dj_subscription.active = True
+                dj_subscription.last4 = data['last4']
                 dj_subscription.save()
 
             except ObjectDoesNotExist:
