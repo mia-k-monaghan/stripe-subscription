@@ -18,8 +18,8 @@ class SignupView(CreateView):
     template_name = 'registration/signup.html'
 
     def get_success_url(self):
-        return reverse_lazy('registration:profile', kwargs={'pk': self.object.pk})
-
+        return reverse_lazy('core:checkout')
+        
     def form_valid(self, form):
         stripe.api_key=settings.STRIPE_TEST_SECRET_KEY
         valid = super(SignupView, self).form_valid(form)
