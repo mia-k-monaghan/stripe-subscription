@@ -6,6 +6,7 @@ from django.contrib.auth import views as auth_views
 from django.contrib.auth import login, authenticate, get_user_model
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views.generic import CreateView, DetailView
+from django.shortcuts import get_object_or_404
 
 from core.models import Subscription
 from .forms import SignUpForm, LoginForm
@@ -19,7 +20,7 @@ class SignupView(CreateView):
 
     def get_success_url(self):
         return reverse_lazy('core:checkout')
-        
+
     def form_valid(self, form):
         stripe.api_key=settings.STRIPE_TEST_SECRET_KEY
         valid = super(SignupView, self).form_valid(form)
@@ -52,3 +53,12 @@ class ProfileView(LoginRequiredMixin, DetailView):
     model = get_user_model()
     context_object_name = 'user'
     template_name = 'registration/profile.html'
+
+    def get_context_data(self, **kwargs):
+        context = super(ProfileView, self).get_context_data(**kwargs)
+        status = get_object_or_404(Subscription,user=self.get_object()).active
+        if status:
+            context['status'] = "Your Subscription is active"
+        
+
+        return context
