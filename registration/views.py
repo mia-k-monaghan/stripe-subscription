@@ -34,8 +34,9 @@ class SignupView(CreateView):
         )
         Subscription.objects.create(
             user=self.request.user,
-            stripe_customer = new_stripe_cust.id
             )
+        self.request.user.stripe_customer = new_stripe_cust.id
+        self.request.user.save()
 
 
         return valid
