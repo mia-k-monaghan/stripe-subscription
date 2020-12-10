@@ -2,12 +2,21 @@
 {% block content %}
   <div class="jumbotron">
     <h1>Welcome, {{user.first_name}}</h1>
-    <p class="text-muted ">Account Details</p>
+    <p class="text-muted "></p>
   </div>
   <div class="card mx-5">
     <div class="card-body">
+      <h5 class="card-title">Account Details</h5>
+      <p><strong>{{status}}</strong></p>
       <p>Name: {{user.first_name}} {{user.last_name}}</p>
       <p>Email: {{user.email}}</p>
+      <p>Payment Method: **** **** **** {{last4}}</p>
+
+      <form method="POST" action="{% url 'core:session' %}">
+        {% csrf_token %}
+          <button class="btn btn-success" type="submit">Manage billing</button>
+      </form>
+
     </div>
 
   </div>
