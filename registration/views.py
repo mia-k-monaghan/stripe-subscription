@@ -59,7 +59,7 @@ class ProfileView(LoginRequiredMixin, DetailView):
         sub = get_object_or_404(Subscription,user=self.get_object())
         context['last4'] = sub.last4
         status = sub.active
-                if status:
+        if status:
             context['status'] = "Your Subscription is active"
 
 
