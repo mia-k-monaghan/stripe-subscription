@@ -5,6 +5,8 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.decorators import login_required
 from django.views.decorators.csrf import csrf_exempt
 from django.views.generic import View
+from django.core.exceptions import ObjectDoesNotExist
+from .models import Subscription
 
 import json
 import stripe
@@ -46,6 +48,16 @@ def createSubscription(request):
                 ],
                 expand=['latest_invoice.payment_intent'],
             )
+
+            # Update the local subscription models
+            dj_subscription = Subscription.objects.get(user=request.user)
+            try:
+                dj_subscription.stripe_subscription = subscription.id
+                dj_subscription.save()
+                
+            except ObjectDoesNotExist:
+                print("could not find user object")
+
             return JsonResponse(subscription)
         except Exception as e:
             print(str(e))
