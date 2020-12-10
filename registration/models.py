@@ -40,6 +40,9 @@ class UserManager(BaseUserManager):
 class User(AbstractUser):
     username = None
     email = models.EmailField(_('email address'), unique=True)
+    stripe_customer = models.CharField(max_length=100,blank=True,
+        help_text = "The user's Stripe Customer object, if it exists")
+
 
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = [] # removes email from REQUIRED_FIELDS
