@@ -53,8 +53,9 @@ def createSubscription(request):
             dj_subscription = Subscription.objects.get(user=request.user)
             try:
                 dj_subscription.stripe_subscription = subscription.id
+                dj_subscription.active = True
                 dj_subscription.save()
-                
+
             except ObjectDoesNotExist:
                 print("could not find user object")
 
