@@ -56,9 +56,11 @@ class ProfileView(LoginRequiredMixin, DetailView):
 
     def get_context_data(self, **kwargs):
         context = super(ProfileView, self).get_context_data(**kwargs)
-        status = get_object_or_404(Subscription,user=self.get_object()).active
-        if status:
+        sub = get_object_or_404(Subscription,user=self.get_object())
+        context['last4'] = sub.last4
+        status = sub.active
+                if status:
             context['status'] = "Your Subscription is active"
-        
+
 
         return context
