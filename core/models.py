@@ -9,6 +9,7 @@ class Subscription(models.Model):
         help_text = "The user's Stripe Customer object, if it exists")
     last4 = models.CharField(max_length=4,blank=True,
         help_text = "The user's last 4 credit card digits, if they exist")
+    tracking = models.CharField(max_length=50,blank=True)
 
     def __str__(self):
         return str(self.user)
